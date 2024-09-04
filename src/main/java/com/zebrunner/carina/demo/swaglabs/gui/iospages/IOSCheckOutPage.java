@@ -1,16 +1,13 @@
-package com.zebrunner.carina.demo.swaglabs.iospages;
+package com.zebrunner.carina.demo.swaglabs.gui.iospages;
 
-import com.zebrunner.carina.demo.swaglabs.commonpages.CartPageBase;
-import com.zebrunner.carina.demo.swaglabs.commonpages.CheckOutPageBase;
-import com.zebrunner.carina.demo.swaglabs.commonpages.LoginPageBase;
-import com.zebrunner.carina.demo.swaglabs.commonpages.OverviewPageBase;
+import com.zebrunner.carina.demo.swaglabs.gui.commonpages.CheckOutPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = CheckOutPageBase.class)
-public class IOSCheckOutPage  extends CheckOutPageBase {
+public class IOSCheckOutPage extends CheckOutPageBase {
     @ExtendedFindBy(iosPredicate = "name == 'test-First Name'")
     ExtendedWebElement nameInput;
 
@@ -40,7 +37,7 @@ public class IOSCheckOutPage  extends CheckOutPageBase {
     }
 
     @Override
-    public IOSCartPage goBack(){
+    public IOSCartPage goBack() {
         cancelButton.click();
         return new IOSCartPage(driver);
     }

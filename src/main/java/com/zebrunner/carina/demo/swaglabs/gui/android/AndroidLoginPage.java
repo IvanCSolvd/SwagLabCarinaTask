@@ -1,6 +1,6 @@
-package com.zebrunner.carina.demo.swaglabs.android;
+package com.zebrunner.carina.demo.swaglabs.gui.android;
 
-import com.zebrunner.carina.demo.swaglabs.commonpages.LoginPageBase;
+import com.zebrunner.carina.demo.swaglabs.gui.commonpages.LoginPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;

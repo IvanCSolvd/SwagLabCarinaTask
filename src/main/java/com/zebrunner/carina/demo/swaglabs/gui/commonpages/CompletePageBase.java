@@ -1,9 +1,9 @@
-package com.zebrunner.carina.demo.swaglabs.commonpages;
+package com.zebrunner.carina.demo.swaglabs.gui.commonpages;
 
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
 
-public abstract class CompletePageBase  extends AbstractPage {
+public abstract class CompletePageBase extends AbstractPage {
     protected CompletePageBase(WebDriver driver) {
         super(driver);
     }

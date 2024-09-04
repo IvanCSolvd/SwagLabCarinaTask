@@ -1,4 +1,4 @@
-package com.zebrunner.carina.demo.swaglabs.commonpages;
+package com.zebrunner.carina.demo.swaglabs.gui.commonpages;
 
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;

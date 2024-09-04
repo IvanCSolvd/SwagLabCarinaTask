@@ -1,7 +1,6 @@
-package com.zebrunner.carina.demo.swaglabs.iospages;
+package com.zebrunner.carina.demo.swaglabs.gui.iospages;
 
-import com.zebrunner.carina.demo.swaglabs.commonpages.CartPageBase;
-import com.zebrunner.carina.demo.swaglabs.commonpages.CheckOutPageBase;
+import com.zebrunner.carina.demo.swaglabs.gui.commonpages.CartPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;

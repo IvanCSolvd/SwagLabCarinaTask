@@ -1,6 +1,6 @@
-package com.zebrunner.carina.demo.swaglabs.android;
+package com.zebrunner.carina.demo.swaglabs.gui.android;
 
-import com.zebrunner.carina.demo.swaglabs.commonpages.CheckOutPageBase;
+import com.zebrunner.carina.demo.swaglabs.gui.commonpages.CheckOutPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -37,7 +37,7 @@ public class AndroidCheckOutPage extends CheckOutPageBase {
     }
 
     @Override
-    public AndroidCartPage goBack(){
+    public AndroidCartPage goBack() {
         cancelButton.click();
         return new AndroidCartPage(driver);
     }
