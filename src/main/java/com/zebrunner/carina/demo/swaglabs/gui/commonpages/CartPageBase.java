@@ -11,4 +11,8 @@ public abstract class CartPageBase extends AbstractPage {
     public abstract ProductStorePageBase tapContinueShoppingButton();
 
     public abstract CheckOutPageBase tapCheckoutButton();
+
+    public abstract void removeFromCart();
+
+    public abstract boolean isCartEmpty();
 }

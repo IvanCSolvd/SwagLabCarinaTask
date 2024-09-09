@@ -8,10 +8,10 @@ import org.openqa.selenium.WebDriver;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = OverviewPageBase.class)
 public class AndroidOverviewPage extends OverviewPageBase {
-    @ExtendedFindBy()
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().description('test-CANCEL')")
     ExtendedWebElement cancelButton;
 
-    @ExtendedFindBy()
+    @ExtendedFindBy(accessibilityId = "test-FINISH")
     ExtendedWebElement finishButton;
 
     protected AndroidOverviewPage(WebDriver driver) {

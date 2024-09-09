@@ -8,16 +8,16 @@ import org.openqa.selenium.WebDriver;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = LoginPageBase.class)
 public class AndroidLoginPage extends LoginPageBase {
-    @ExtendedFindBy()
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().text('Username')")
     ExtendedWebElement userInput;
 
-    @ExtendedFindBy()
+    @ExtendedFindBy(accessibilityId = "test-Password")
     ExtendedWebElement passwordInput;
 
-    @ExtendedFindBy()
+    @ExtendedFindBy(accessibilityId = "test-LOGIN")
     ExtendedWebElement submitButton;
 
-    @ExtendedFindBy()
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().className('android.widget.ImageView').instance(0)")
     ExtendedWebElement logo;
 
     protected AndroidLoginPage(WebDriver driver) {

@@ -9,10 +9,10 @@ import org.openqa.selenium.WebDriver;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CompletePageBase.class)
 public class AndroidCompletePage extends CompletePageBase {
-    @ExtendedFindBy()
+    @ExtendedFindBy(accessibilityId = "test-BACK HOME")
     ExtendedWebElement goHomeButton;
 
-    @ExtendedFindBy()
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().text('THANK YOU FOR YOU ORDER')")
     ExtendedWebElement successText;
 
     protected AndroidCompletePage(WebDriver driver) {

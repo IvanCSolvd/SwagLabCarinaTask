@@ -8,20 +8,23 @@ import org.openqa.selenium.WebDriver;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CheckOutPageBase.class)
 public class AndroidCheckOutPage extends CheckOutPageBase {
-    @ExtendedFindBy()
+    @ExtendedFindBy(accessibilityId = "test-First Name")
     ExtendedWebElement nameInput;
 
-    @ExtendedFindBy()
+    @ExtendedFindBy(accessibilityId = "test-Last Name")
     ExtendedWebElement lastNameInput;
 
-    @ExtendedFindBy()
+    @ExtendedFindBy(accessibilityId = "test-Zip/Postal Code")
     ExtendedWebElement postalCodeInput;
 
-    @ExtendedFindBy()
+    @ExtendedFindBy(accessibilityId = "test-CANCEL")
     ExtendedWebElement cancelButton;
 
-    @ExtendedFindBy()
+    @ExtendedFindBy(accessibilityId = "test-CONTINUE")
     ExtendedWebElement continueButton;
+
+    @ExtendedFindBy(accessibilityId = "test-Error message")
+    ExtendedWebElement errorOnCheckOutText;
 
     protected AndroidCheckOutPage(WebDriver driver) {
         super(driver);
@@ -40,5 +43,18 @@ public class AndroidCheckOutPage extends CheckOutPageBase {
     public AndroidCartPage goBack() {
         cancelButton.click();
         return new AndroidCartPage(driver);
+    }
+
+    @Override
+    public void fillDataTriggerError(String firstName, String lastName, String zipCode) {
+        nameInput.type(firstName);
+        lastNameInput.type(lastName);
+        postalCodeInput.type(zipCode);
+        continueButton.click();
+    }
+
+    @Override
+    public boolean errorOnCheckOutTextPresent() {
+        return errorOnCheckOutText.isPresent();
     }
 }

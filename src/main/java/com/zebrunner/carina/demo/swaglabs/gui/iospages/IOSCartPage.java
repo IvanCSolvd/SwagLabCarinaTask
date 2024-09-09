@@ -15,6 +15,15 @@ public class IOSCartPage extends CartPageBase {
     @ExtendedFindBy(iosPredicate = "name == 'test-CHECKOUT'")
     ExtendedWebElement checkoutButton;
 
+    @ExtendedFindBy(iosPredicate = "name == 'test-REMOVE'")
+    ExtendedWebElement removeFromCartButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'test-Item'`][1]")
+    ExtendedWebElement item1InCart;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'test-Item'`][2]")
+    ExtendedWebElement item2InCart;
+
     protected IOSCartPage(WebDriver driver) {
         super(driver);
     }
@@ -29,5 +38,15 @@ public class IOSCartPage extends CartPageBase {
     public IOSCheckOutPage tapCheckoutButton() {
         checkoutButton.click();
         return new IOSCheckOutPage(driver);
+    }
+
+    @Override
+    public void removeFromCart() {
+        removeFromCartButton.click();
+    }
+
+    @Override
+    public boolean isCartEmpty() {
+        return !item1InCart.isPresent() && !item2InCart.isPresent();
     }
 }

@@ -11,4 +11,8 @@ public abstract class CheckOutPageBase extends AbstractPage {
     public abstract OverviewPageBase fillData(String firstName, String lastName, String zipCode);
 
     public abstract CartPageBase goBack();
+
+    public abstract void fillDataTriggerError(String firstName, String lastName, String zipCode);
+
+    public abstract boolean errorOnCheckOutTextPresent();
 }

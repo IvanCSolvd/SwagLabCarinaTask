@@ -1,5 +1,7 @@
 package com.zebrunner.carina.demo.swaglabs.gui.iospages;
 
+import com.zebrunner.carina.demo.swaglabs.components.ios.IOSFilterComponent;
+import com.zebrunner.carina.demo.swaglabs.enums.SortingType;
 import com.zebrunner.carina.demo.swaglabs.gui.commonpages.ProductStorePageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -16,6 +18,9 @@ public class IOSProductStorePage extends ProductStorePageBase {
 
     @ExtendedFindBy(iosPredicate = "name == 'test-Cart'")
     ExtendedWebElement cartButton;
+
+    @ExtendedFindBy(iosPredicate = "name == 'test-LOGOUT'")
+    ExtendedWebElement logOutButton;
 
     @ExtendedFindBy(iosPredicate = "name == 'test-Modal Selector Button'")
     ExtendedWebElement filterButton;
@@ -35,20 +40,40 @@ public class IOSProductStorePage extends ProductStorePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'test-ADD TO CART'`][2]")
     ExtendedWebElement cartWithTwoItemAdded;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Selector container\"`][1]")
+    IOSFilterComponent filterOption;
+
+    @ExtendedFindBy(iosPredicate = "name == 'test-REMOVE'")
+    ExtendedWebElement removeItemButton;
 
     protected IOSProductStorePage(WebDriver driver) {
         super(driver);
     }
 
+    @Override
     public IOSCartPage tapCartButton() {
         cartButton.click();
         return new IOSCartPage(driver);
     }
 
+    @Override
+    public void tapMenuButton() {
+        menuButton.click();
+    }
+
+    @Override
+    public IOSLoginPage logOut() {
+        tapMenuButton();
+        logOutButton.click();
+        return new IOSLoginPage(driver);
+    }
+
+    @Override
     public void addItemToCart() {
         addToCartButton.click();
     }
 
+    @Override
     public void addSecondItemToCart() {
         addToCartSecondProductButton.click();
     }
@@ -60,12 +85,12 @@ public class IOSProductStorePage extends ProductStorePageBase {
 
     @Override
     public boolean wasItemAdded() {
-        return cartWithItemAdded.clickIfPresent();
+        return cartWithItemAdded.isPresent();
     }
 
     @Override
     public boolean wasTwoItemsAdded() {
-        return cartWithItemAdded.clickIfPresent();
+        return cartWithTwoItemAdded.isPresent();
     }
 
     @Override
@@ -102,5 +127,17 @@ public class IOSProductStorePage extends ProductStorePageBase {
             }
         }
         return true;
+    }
+
+    @Override
+    public void sortBy(SortingType sortingType) {
+        filterButton.click();
+        filterOption.sortBy(sortingType);
+    }
+
+
+    @Override
+    public void removeFromCart() {
+        removeItemButton.click();
     }
 }

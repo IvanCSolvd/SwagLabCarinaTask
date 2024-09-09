@@ -1,26 +1,52 @@
 package com.zebrunner.carina.demo.swaglabs.gui.android;
 
+import com.zebrunner.carina.demo.swaglabs.components.ios.IOSFilterComponent;
+import com.zebrunner.carina.demo.swaglabs.enums.SortingType;
+import com.zebrunner.carina.demo.swaglabs.gui.commonpages.LoginPageBase;
 import com.zebrunner.carina.demo.swaglabs.gui.commonpages.ProductStorePageBase;
+import com.zebrunner.carina.demo.swaglabs.gui.iospages.IOSProductList;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductStorePageBase.class)
 public class AndroidProductStorePage extends ProductStorePageBase {
-    @ExtendedFindBy()
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().className(\"android.widget.ImageView\").instance(1)")
     ExtendedWebElement menuButton;
 
-    @ExtendedFindBy()
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().className(\"android.widget.ImageView\").instance(3)")
     ExtendedWebElement cartButton;
 
     @ExtendedFindBy()
+    ExtendedWebElement logOutButton;
+
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().description(\"test-Cart\")")
     ExtendedWebElement filterButton;
 
-    @ExtendedFindBy()
-    List<ExtendedWebElement> products;
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().description(\"test-Item\")")
+    List<IOSProductList> products;
+
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().description('test-ADD TO CART').instance(0)")
+    ExtendedWebElement addToCartButton;
+
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().description('test-ADD TO CART').instance(1)")
+    ExtendedWebElement addToCartSecondProductButton;
+
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().className('android.widget.ImageView').instance(3)")
+    ExtendedWebElement cartWithItemAdded;
+
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().text('2')")
+    ExtendedWebElement cartWithTwoItemAdded;
+
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().className('android.widget.ImageView').instance(5)")
+    IOSFilterComponent filterOption;
+
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().description('test-REMOVE').instance(0)")
+    ExtendedWebElement removeItemButton;
 
     protected AndroidProductStorePage(WebDriver driver) {
         super(driver);
@@ -33,7 +59,14 @@ public class AndroidProductStorePage extends ProductStorePageBase {
 
     @Override
     public void addItemToCart() {
+        addToCartButton.click();
+    }
 
+    @Override
+    public LoginPageBase logOut() {
+        tapMenuButton();
+        logOutButton.click();
+        return new AndroidLoginPage(driver);
     }
 
     @Override
@@ -43,45 +76,67 @@ public class AndroidProductStorePage extends ProductStorePageBase {
 
     @Override
     public boolean wasItemAdded() {
-        return false;
+        return cartWithItemAdded.isPresent();
     }
 
     @Override
     public boolean wasTwoItemsAdded() {
-        return false;
+        return cartWithTwoItemAdded.isPresent();
     }
 
     @Override
     public void addSecondItemToCart() {
-
+        addToCartSecondProductButton.click();
     }
 
     @Override
     public boolean areItemsSortedByAscendingPrice() {
-        return false;
+        List<Long> prices = new ArrayList<>();
+        for (IOSProductList productListItem : products
+        ) {
+            try {
+                if (productListItem.getProductPriceWebElement().isElementPresent()) {
+                    String priceString = productListItem.getProductPrice();
+                    Long price = Long.parseLong(priceString);
+                    if (!prices.contains(price)) {
+                        prices.add(price);
+                    } else {
+                        break;
+                    }
+                } else {
+                    swipe(productListItem.getProductPriceWebElement());
+                    String priceString = productListItem.getProductPrice();
+                    Long price = Long.parseLong(priceString);
+                    if (!prices.contains(price)) {
+                        prices.add(price);
+                    } else {
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        for (int i = 0; i < prices.size() - 1; i++) {
+            if (prices.get(i) > prices.get(i + 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void sortBy(SortingType sortingType) {
+        filterButton.click();
+        filterOption.sortBy(sortingType);
+    }
+
+    @Override
+    public void removeFromCart() {
+        removeItemButton.click();
     }
 
     public void tapMenuButton() {
         menuButton.click();
-    }
-
-    public void filterByASCName() {
-        filterButton.click();
-        //todo: Add filter by name a-z
-    }
-
-    public void filterByDESCName() {
-        filterButton.click();
-        //todo: Add filter by name z-a
-    }
-
-    public void filterByASCPrice() {
-        filterButton.click();
-        //todo: Add filter by price low to high
-    }
-
-    public void filterByDESCPrice() {
-        filterButton.click();
-        //todo: Add filter by price high to low
     }
 }

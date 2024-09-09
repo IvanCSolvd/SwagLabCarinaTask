@@ -9,11 +9,20 @@ import org.openqa.selenium.WebDriver;
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CartPageBase.class)
 public class AndroidCartPage extends CartPageBase {
 
-    @ExtendedFindBy()
+    @ExtendedFindBy(accessibilityId = "test-CONTINUE SHOPPING")
     ExtendedWebElement continueShoppingCartButton;
 
-    @ExtendedFindBy()
+    @ExtendedFindBy(accessibilityId = "test-CHECKOUT")
     ExtendedWebElement checkoutButton;
+
+    @ExtendedFindBy(accessibilityId = "test-REMOVE")
+    ExtendedWebElement removeFromCartButton;
+
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().description('test-Item').instance(0)")
+    ExtendedWebElement item1InCart;
+
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().description('test-Item').instance(1)")
+    ExtendedWebElement item2InCart;
 
     protected AndroidCartPage(WebDriver driver) {
         super(driver);
@@ -30,4 +39,16 @@ public class AndroidCartPage extends CartPageBase {
         checkoutButton.click();
         return new AndroidCheckOutPage(driver);
     }
+
+    @Override
+    public void removeFromCart() {
+        removeFromCartButton.click();
+    }
+
+    @Override
+    public boolean isCartEmpty() {
+        return !item1InCart.isPresent() && !item2InCart.isPresent();
+    }
+
+
 }

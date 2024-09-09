@@ -9,10 +9,10 @@ import org.openqa.selenium.WebDriver;
 
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = CompletePageBase.class)
 public class IOSCompletePage extends CompletePageBase {
-    @ExtendedFindBy()
+    @ExtendedFindBy(iosPredicate = "name == 'test-BACK HOME'")
     ExtendedWebElement goHomeButton;
 
-    @ExtendedFindBy()
+    @ExtendedFindBy(accessibilityId = "THANK YOU FOR YOU ORDER")
     ExtendedWebElement successText;
 
     protected IOSCompletePage(WebDriver driver) {
