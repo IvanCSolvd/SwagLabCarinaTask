@@ -3,45 +3,59 @@ package com.zebrunner.carina.demo.swaglabs.gui.iospages;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class IOSProductList extends ProductListItemComponent {
+
+    @FindBy(xpath = "(//XCUIElementTypeOther[@name='test-Item'])")
+    ExtendedWebElement product;
+    @FindBy(xpath = "(//XCUIElementTypeOther[@name='test-Item'])[%s]")
+    ExtendedWebElement productWithIndex;
+    @FindBy(xpath = "(//XCUIElementTypeStaticText[@name='test-Price'])")
+    ExtendedWebElement productPrice;
+    @FindBy(xpath = "(//XCUIElementTypeStaticText[@name='test-Item title'])")
+    ExtendedWebElement productTitle;
+    @FindBy(xpath = "(//XCUIElementTypeOther[@name='test-ADD TO CART'])")
+    ExtendedWebElement addToCartButton;
+
     public IOSProductList(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
     }
 
     @Override
     public ExtendedWebElement getProduct() {
-        return null;
+        return product;
     }
 
     @Override
     public ExtendedWebElement getProductByIndex(String index) {
-        return null;
+        return productWithIndex.format(index);
     }
 
     @Override
     public String getProductPrice() {
-        return "";
+        String text = productPrice.getText();
+        String finalText = text.replace("$", "").replace(".", "");
+        return finalText;
     }
 
     @Override
     public String getProductTitle() {
-        return "";
+        return productTitle.getText();
     }
 
     @Override
-    public WebElement getProductTitleWebElement() {
-        return null;
+    public ExtendedWebElement getProductTitleWebElement() {
+        return productTitle;
     }
 
     @Override
     public void clickAddToCartButton() {
-
+        addToCartButton.click();
     }
 
     @Override
     public ExtendedWebElement getProductPriceWebElement() {
-        return null;
+        return productPrice;
     }
 }

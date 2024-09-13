@@ -4,7 +4,6 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public abstract class ProductListItemComponent extends AbstractUIObject {
 
@@ -20,7 +19,7 @@ public abstract class ProductListItemComponent extends AbstractUIObject {
 
     public abstract String getProductTitle();
 
-    public abstract WebElement getProductTitleWebElement();
+    public abstract ExtendedWebElement getProductTitleWebElement();
 
     public abstract void clickAddToCartButton();
 
