@@ -25,7 +25,7 @@ public class LogInTests extends AbstractTest {
     public void missingUserLoginTest() {
         LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
         loginPage.login("", "false_sauce");
-        Assert.assertFalse(loginPage.accountIsLogged(), "Error message for Name credentials should be displayed";
+        Assert.assertFalse(loginPage.accountIsLogged(), "Error message for Name credentials should be displayed");
     }
 
     @Test(description = "Try to LogIn with Missing Password credentials")
