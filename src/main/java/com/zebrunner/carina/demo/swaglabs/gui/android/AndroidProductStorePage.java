@@ -21,7 +21,7 @@ public class AndroidProductStorePage extends ProductStorePageBase {
     @ExtendedFindBy(androidUIAutomator = "new UiSelector().className(\"android.widget.ImageView\").instance(3)")
     ExtendedWebElement cartButton;
 
-    @ExtendedFindBy()
+    @ExtendedFindBy(accessibilityId = "test-LOGOUT")
     ExtendedWebElement logOutButton;
 
     @ExtendedFindBy(androidUIAutomator = "new UiSelector().description(\"test-Cart\")")
@@ -89,8 +89,9 @@ public class AndroidProductStorePage extends ProductStorePageBase {
         addToCartSecondProductButton.click();
     }
 
+    //todo: add logic to use the parameter to check sorting
     @Override
-    public boolean areItemsSortedByAscendingPrice() {
+    public boolean areItemsSortedBy(SortingType sortingType) {
         List<Long> prices = new ArrayList<>();
         for (IOSProductList productListItem : products
         ) {

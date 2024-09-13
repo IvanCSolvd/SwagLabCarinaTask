@@ -32,6 +32,6 @@ public class TransactionsTests extends AbstractTest {
         ProductStorePageBase productStorePageBase = initPage(getDriver(), ProductStorePageBase.class);
         productStorePageBase.sortBy(SortingType.PRICE_LOW_TO_HIGH);
         Thread.sleep(3000);
-        Assert.assertTrue(productStorePageBase.areItemsSortedBy());
+        Assert.assertTrue(productStorePageBase.areItemsSortedBy(SortingType.PRICE_LOW_TO_HIGH));
     }
 }
