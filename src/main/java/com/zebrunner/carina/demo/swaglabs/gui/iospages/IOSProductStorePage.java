@@ -94,7 +94,7 @@ public class IOSProductStorePage extends ProductStorePageBase {
     }
 
     @Override
-    public boolean areItemsSortedByAscendingPrice() {
+    public boolean areItemsSortedBy(SortingType sortingType) {
         List<Long> prices = new ArrayList<>();
         for (IOSProductList productListItem : products
         ) {

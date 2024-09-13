@@ -26,7 +26,7 @@ public abstract class ProductStorePageBase extends AbstractPage implements IMobi
 
     public abstract void addSecondItemToCart();
 
-    public abstract boolean areItemsSortedByAscendingPrice();
+    public abstract boolean areItemsSortedBy(SortingType sortingType);
 
     public abstract void sortBy(SortingType sortingType);
 
