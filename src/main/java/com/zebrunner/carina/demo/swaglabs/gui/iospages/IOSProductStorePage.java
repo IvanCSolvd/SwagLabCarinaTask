@@ -79,11 +79,6 @@ public class IOSProductStorePage extends ProductStorePageBase {
     }
 
     @Override
-    public void removeItemFromCart() {
-
-    }
-
-    @Override
     public boolean wasItemAdded() {
         return cartWithItemAdded.isPresent();
     }

@@ -18,8 +18,6 @@ public abstract class ProductStorePageBase extends AbstractPage implements IMobi
 
     public abstract LoginPageBase logOut();
 
-    public abstract void removeItemFromCart();
-
     public abstract boolean wasItemAdded();
 
     public abstract boolean wasTwoItemsAdded();
