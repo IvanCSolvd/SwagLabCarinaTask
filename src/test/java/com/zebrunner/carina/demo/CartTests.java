@@ -11,20 +11,20 @@ public class CartTests extends AbstractTest {
     public void addItemToCartTest() {
         ProductStorePageBase productStorePageBase = initPage(getDriver(), ProductStorePageBase.class);
         productStorePageBase.addItemToCart();
-        Assert.assertTrue(productStorePageBase.wasItemAdded());
+        Assert.assertTrue(productStorePageBase.wasItemAdded(), "Items was not added to the cart");
         productStorePageBase.addSecondItemToCart();
-        Assert.assertFalse(productStorePageBase.wasTwoItemsAdded());
+        Assert.assertFalse(productStorePageBase.wasTwoItemsAdded(),"Second items were not added to the cart");
         CartPageBase cartPage = productStorePageBase.tapCartButton();
-        Assert.assertFalse(cartPage.isCartEmpty());
+        Assert.assertFalse(cartPage.isCartEmpty(), "Cart is empty");
     }
 
     @Test
     public void deleteItemFromCartTest() {
         ProductStorePageBase productStorePageBase = initPage(getDriver(), ProductStorePageBase.class);
         productStorePageBase.addItemToCart();
-        Assert.assertTrue(productStorePageBase.wasItemAdded());
+        Assert.assertTrue(productStorePageBase.wasItemAdded(),"Items was not added to the cart");
         CartPageBase cartPage = productStorePageBase.tapCartButton();
         cartPage.removeFromCart();
-        Assert.assertFalse(productStorePageBase.wasItemAdded());
+        Assert.assertFalse(productStorePageBase.wasItemAdded(), "Item is still present in the cart");
     }
 }

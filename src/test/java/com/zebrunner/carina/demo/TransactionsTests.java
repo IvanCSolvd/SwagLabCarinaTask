@@ -14,7 +14,7 @@ public class TransactionsTests extends AbstractTest {
         CheckOutPageBase checkOutPageBase = cartPage.tapCheckoutButton();
         OverviewPageBase overviewPageBase = checkOutPageBase.fillData("Test", "Test", "1000");
         CompletePageBase completePageBase = overviewPageBase.tapFinish();
-        Assert.assertTrue(completePageBase.isSuccessTextPresent());
+        Assert.assertTrue(completePageBase.isSuccessTextPresent(), "Success text for transaction is not present");
     }
 
     @Test
@@ -23,7 +23,7 @@ public class TransactionsTests extends AbstractTest {
         CartPageBase cartPage = productStorePageBase.tapCartButton();
         CheckOutPageBase checkOutPageBase = cartPage.tapCheckoutButton();
         checkOutPageBase.fillDataTriggerError("", "Test", "1000");
-        Assert.assertTrue(checkOutPageBase.errorOnCheckOutTextPresent());
+        Assert.assertTrue(checkOutPageBase.errorOnCheckOutTextPresent(), "Missing error text for Name credential");
     }
 
 
@@ -32,6 +32,6 @@ public class TransactionsTests extends AbstractTest {
         ProductStorePageBase productStorePageBase = initPage(getDriver(), ProductStorePageBase.class);
         productStorePageBase.sortBy(SortingType.PRICE_LOW_TO_HIGH);
         Thread.sleep(3000);
-        Assert.assertTrue(productStorePageBase.areItemsSortedBy(SortingType.PRICE_LOW_TO_HIGH));
+        Assert.assertTrue(productStorePageBase.areItemsSortedBy(SortingType.PRICE_LOW_TO_HIGH), "The products are not correctly sorted.");
     }
 }
