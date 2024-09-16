@@ -20,6 +20,9 @@ public class IOSLoginPage extends LoginPageBase {
     @ExtendedFindBy(iosPredicate = "name == 'assets/src/img/swag-labs-logo.png'")
     ExtendedWebElement logo;
 
+    @ExtendedFindBy(image = "images/SwagLabMascot.png")
+    ExtendedWebElement mascotImage;
+
     protected IOSLoginPage(WebDriver driver) {
         super(driver);
     }
@@ -35,5 +38,10 @@ public class IOSLoginPage extends LoginPageBase {
     @Override
     public boolean accountIsLogged() {
         return !logo.isPresent();
+    }
+
+    @Override
+    public boolean isMascotPresent() {
+        return mascotImage.isPresent();
     }
 }

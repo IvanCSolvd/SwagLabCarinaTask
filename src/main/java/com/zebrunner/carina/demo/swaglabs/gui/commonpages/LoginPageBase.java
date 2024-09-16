@@ -11,4 +11,6 @@ public abstract class LoginPageBase extends AbstractPage {
     public abstract ProductStorePageBase login(String username, String password);
 
     public abstract boolean accountIsLogged();
+
+    public abstract boolean isMascotPresent();
 }

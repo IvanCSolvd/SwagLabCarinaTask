@@ -20,6 +20,9 @@ public class AndroidLoginPage extends LoginPageBase {
     @ExtendedFindBy(androidUIAutomator = "new UiSelector().className('android.widget.ImageView').instance(0)")
     ExtendedWebElement logo;
 
+    @ExtendedFindBy(image = "images/SwagLabMascot.png")
+    ExtendedWebElement mascotImage;
+
     protected AndroidLoginPage(WebDriver driver) {
         super(driver);
     }
@@ -35,5 +38,10 @@ public class AndroidLoginPage extends LoginPageBase {
     @Override
     public boolean accountIsLogged() {
         return !logo.isPresent();
+    }
+
+    @Override
+    public boolean isMascotPresent() {
+        return mascotImage.isPresent();
     }
 }
