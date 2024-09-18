@@ -35,6 +35,7 @@ public class LogInTests extends AbstractTest {
         Assert.assertFalse(loginPage.accountIsLogged(), "Error message for Password credentials should be displayed");
     }
 
+    @Test
     public void mascotIsPresentTest() {
         LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
         Assert.assertTrue(loginPage.isMascotPresent(), "Mascot is not present or not displayed correctly");
