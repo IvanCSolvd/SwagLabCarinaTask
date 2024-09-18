@@ -1,4 +1,4 @@
-package com.zebrunner.carina.demo.swaglabs.gui.iospages;
+package com.zebrunner.carina.demo.swaglabs.components.ios;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
