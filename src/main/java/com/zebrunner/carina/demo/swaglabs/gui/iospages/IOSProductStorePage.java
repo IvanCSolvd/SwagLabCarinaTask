@@ -1,6 +1,7 @@
 package com.zebrunner.carina.demo.swaglabs.gui.iospages;
 
 import com.zebrunner.carina.demo.swaglabs.components.ios.IOSFilterComponent;
+import com.zebrunner.carina.demo.swaglabs.components.ios.IOSFooterComponent;
 import com.zebrunner.carina.demo.swaglabs.enums.SortingType;
 import com.zebrunner.carina.demo.swaglabs.gui.commonpages.ProductStorePageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
@@ -9,7 +10,9 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = ProductStorePageBase.class)
 public class IOSProductStorePage extends ProductStorePageBase {
@@ -28,23 +31,17 @@ public class IOSProductStorePage extends ProductStorePageBase {
     @ExtendedFindBy(iosPredicate = "**/XCUIElementTypeOther[`name == 'test-Item'`]")
     List<IOSProductList> products;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'test-ADD TO CART'`][1]")
+    @ExtendedFindBy(iosClassChain = "test-ADD TO CART")
     ExtendedWebElement addToCartButton;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == '1'`][4]")
-    ExtendedWebElement addToCartSecondProductButton;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'test-ADD TO CART'`][1]")
-    ExtendedWebElement cartWithItemAdded;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'test-ADD TO CART'`][2]")
-    ExtendedWebElement cartWithTwoItemAdded;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Selector container\"`][1]")
     IOSFilterComponent filterOption;
 
     @ExtendedFindBy(iosPredicate = "name == 'test-REMOVE'")
     ExtendedWebElement removeItemButton;
+
+    @ExtendedFindBy(iosPredicate = "label == \"© 2024 Sauce Labs. All Rights Reserved.\"")
+    IOSFooterComponent iosFooter;
 
     protected IOSProductStorePage(WebDriver driver) {
         super(driver);
@@ -70,22 +67,42 @@ public class IOSProductStorePage extends ProductStorePageBase {
 
     @Override
     public void addItemToCart() {
+        while (!addToCartButton.isPresent()){
+            swipe(addToCartButton);
+        }
         addToCartButton.click();
     }
 
     @Override
-    public void addSecondItemToCart() {
-        addToCartSecondProductButton.click();
-    }
+    public void addProductsToCartByTitle(List<String> productTitles) {
+        Set<String> addedProducts = new HashSet<>();
+        int maxIterations = 5;
 
-    @Override
-    public boolean wasItemAdded() {
-        return cartWithItemAdded.isPresent();
-    }
-
-    @Override
-    public boolean wasTwoItemsAdded() {
-        return cartWithTwoItemAdded.isPresent();
+        while (maxIterations > 0) {
+            for (String product : productTitles) {
+                if (addedProducts.contains(product)) {
+                    continue;
+                }
+                for (IOSProductList productListItem : products) {
+                    try {
+                        String productTitle = productListItem.getProductTitle();
+                        if (product.equals(productTitle)) {
+                            productListItem.clickAddToCartButton();
+                            addedProducts.add(product);
+                            break;
+                        }
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            if (addedProducts.size() == productTitles.size()) {
+                break;
+            }
+            if (!swipe(iosFooter.getAllRightsReservedText(), Direction.UP, 2, 600)) {
+                maxIterations--;
+            }
+        }
     }
 
     @Override

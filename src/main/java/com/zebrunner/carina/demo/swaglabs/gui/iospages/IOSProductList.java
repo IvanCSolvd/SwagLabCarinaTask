@@ -1,5 +1,6 @@
 package com.zebrunner.carina.demo.swaglabs.gui.iospages;
 
+import com.zebrunner.carina.demo.swaglabs.components.ios.ProductListItemComponent;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;

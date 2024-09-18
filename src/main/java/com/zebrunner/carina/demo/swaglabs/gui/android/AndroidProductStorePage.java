@@ -1,5 +1,7 @@
 package com.zebrunner.carina.demo.swaglabs.gui.android;
 
+import com.zebrunner.carina.demo.swaglabs.components.android.AndroidFooterComponent;
+import com.zebrunner.carina.demo.swaglabs.components.android.AndroidProductListComponent;
 import com.zebrunner.carina.demo.swaglabs.components.ios.IOSFilterComponent;
 import com.zebrunner.carina.demo.swaglabs.enums.SortingType;
 import com.zebrunner.carina.demo.swaglabs.gui.commonpages.LoginPageBase;
@@ -9,9 +11,12 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductStorePageBase.class)
 public class AndroidProductStorePage extends ProductStorePageBase {
@@ -28,25 +33,19 @@ public class AndroidProductStorePage extends ProductStorePageBase {
     ExtendedWebElement filterButton;
 
     @ExtendedFindBy(androidUIAutomator = "new UiSelector().description(\"test-Item\")")
-    List<IOSProductList> products;
+    List<AndroidProductListComponent> products;
 
-    @ExtendedFindBy(androidUIAutomator = "new UiSelector().description('test-ADD TO CART').instance(0)")
+    @ExtendedFindBy(androidUIAutomator = "new UiSelector().description('test-ADD TO CART')")
     ExtendedWebElement addToCartButton;
-
-    @ExtendedFindBy(androidUIAutomator = "new UiSelector().description('test-ADD TO CART').instance(1)")
-    ExtendedWebElement addToCartSecondProductButton;
-
-    @ExtendedFindBy(androidUIAutomator = "new UiSelector().className('android.widget.ImageView').instance(3)")
-    ExtendedWebElement cartWithItemAdded;
-
-    @ExtendedFindBy(androidUIAutomator = "new UiSelector().text('2')")
-    ExtendedWebElement cartWithTwoItemAdded;
 
     @ExtendedFindBy(androidUIAutomator = "new UiSelector().className('android.widget.ImageView').instance(5)")
     IOSFilterComponent filterOption;
 
     @ExtendedFindBy(androidUIAutomator = "new UiSelector().description('test-REMOVE').instance(0)")
     ExtendedWebElement removeItemButton;
+
+    @FindBy(xpath = "//android.widget.ScrollView[@content-desc=\"test-PRODUCTS\"]/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup")
+    AndroidFooterComponent androidFooterComponent;
 
     protected AndroidProductStorePage(WebDriver driver) {
         super(driver);
@@ -59,6 +58,9 @@ public class AndroidProductStorePage extends ProductStorePageBase {
 
     @Override
     public void addItemToCart() {
+        while (!addToCartButton.isPresent()){
+            swipe(addToCartButton);
+        }
         addToCartButton.click();
     }
 
@@ -70,29 +72,45 @@ public class AndroidProductStorePage extends ProductStorePageBase {
     }
 
     @Override
-    public boolean wasItemAdded() {
-        return cartWithItemAdded.isPresent();
-    }
+    public void addProductsToCartByTitle(List<String> productTitles) {
+        Set<String> addedProducts = new HashSet<>();
+        int maxIterations = 5;
 
-    @Override
-    public boolean wasTwoItemsAdded() {
-        return cartWithTwoItemAdded.isPresent();
-    }
-
-    @Override
-    public void addSecondItemToCart() {
-        addToCartSecondProductButton.click();
+        while (maxIterations > 0) {
+            for (String product : productTitles) {
+                if (addedProducts.contains(product)) {
+                    continue;
+                }
+                for (AndroidProductListComponent productListItem : products) {
+                    try {
+                        String productTitle = productListItem.getProductTitle();
+                        if (product.equals(productTitle)) {
+                            productListItem.clickAddToCartButton();
+                            addedProducts.add(product);
+                            break;
+                        }
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            if (addedProducts.size() == productTitles.size()) {
+                break;
+            }
+            if (!swipe(androidFooterComponent.getAllRightsReservedText(), Direction.UP, 2, 600)) {
+                maxIterations--;
+            }
+        }
     }
 
     //todo: add logic to use the parameter to check sorting
     @Override
     public boolean areItemsSortedBy(SortingType sortingType) {
         List<Long> prices = new ArrayList<>();
-        for (IOSProductList productListItem : products
-        ) {
+        for (AndroidProductListComponent productList : products) {
             try {
-                if (productListItem.getProductPriceWebElement().isElementPresent()) {
-                    String priceString = productListItem.getProductPrice();
+                if (productList.getProductPriceWebElement().isElementPresent()) {
+                    String priceString = productList.getProductPrice();
                     Long price = Long.parseLong(priceString);
                     if (!prices.contains(price)) {
                         prices.add(price);
@@ -100,8 +118,8 @@ public class AndroidProductStorePage extends ProductStorePageBase {
                         break;
                     }
                 } else {
-                    swipe(productListItem.getProductPriceWebElement());
-                    String priceString = productListItem.getProductPrice();
+                    swipe(productList.getProductPriceWebElement());
+                    String priceString = productList.getProductPrice();
                     Long price = Long.parseLong(priceString);
                     if (!prices.contains(price)) {
                         prices.add(price);
