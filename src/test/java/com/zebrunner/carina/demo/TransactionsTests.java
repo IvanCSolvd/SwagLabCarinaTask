@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 public class TransactionsTests extends AbstractTest {
     @Test
-    public void correctCheckOutTest() {
+    public void checkOutTest() {
         ProductStorePageBase productStorePageBase = initPage(getDriver(), ProductStorePageBase.class);
         CartPageBase cartPage = productStorePageBase.tapCartButton();
         CheckOutPageBase checkOutPageBase = cartPage.tapCheckoutButton();
@@ -18,7 +18,7 @@ public class TransactionsTests extends AbstractTest {
     }
 
     @Test
-    public void missingNameCheckOutTest() {
+    public void checkOutMissingNameTest() {
         ProductStorePageBase productStorePageBase = initPage(getDriver(), ProductStorePageBase.class);
         CartPageBase cartPage = productStorePageBase.tapCartButton();
         CheckOutPageBase checkOutPageBase = cartPage.tapCheckoutButton();
