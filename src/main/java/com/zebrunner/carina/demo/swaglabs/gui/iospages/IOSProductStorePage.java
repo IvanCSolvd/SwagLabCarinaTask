@@ -67,7 +67,7 @@ public class IOSProductStorePage extends ProductStorePageBase {
 
     @Override
     public void addItemToCart() {
-        while (!addToCartButton.isPresent()){
+        while (!addToCartButton.isPresent()) {
             swipe(addToCartButton);
         }
         addToCartButton.click();

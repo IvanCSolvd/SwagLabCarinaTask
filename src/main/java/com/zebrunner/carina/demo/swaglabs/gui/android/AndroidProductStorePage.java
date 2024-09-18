@@ -6,7 +6,6 @@ import com.zebrunner.carina.demo.swaglabs.components.ios.IOSFilterComponent;
 import com.zebrunner.carina.demo.swaglabs.enums.SortingType;
 import com.zebrunner.carina.demo.swaglabs.gui.commonpages.LoginPageBase;
 import com.zebrunner.carina.demo.swaglabs.gui.commonpages.ProductStorePageBase;
-import com.zebrunner.carina.demo.swaglabs.gui.iospages.IOSProductList;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -58,7 +57,7 @@ public class AndroidProductStorePage extends ProductStorePageBase {
 
     @Override
     public void addItemToCart() {
-        while (!addToCartButton.isPresent()){
+        while (!addToCartButton.isPresent()) {
             swipe(addToCartButton);
         }
         addToCartButton.click();
